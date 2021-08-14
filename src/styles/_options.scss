@@ -1,0 +1,47 @@
+.options{
+    padding: 20px 0;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    background: $white;
+
+    &__header{
+        font-weight: 600;
+        font-size: 12px;
+        line-height: 12px;
+        margin-bottom: 20px;
+        margin-left: 20px;
+        text-transform: uppercase;
+    }
+    &__item{
+        display: flex;
+        align-items: center;
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 20px;
+        cursor: pointer;
+        padding: 10px 0;
+        padding-left: 20px;
+        transition: background .15s ease-in;
+        color: $grey;
+
+        &:hover{
+            background: $hover;
+        }
+        input{
+            display: none;
+        }
+        .custom_checkbox{
+            border: 1px solid $murky_blue;
+            border-radius: 2px;
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+        input:checked + .custom_checkbox{
+            border-color: $blue;
+            background-image: url("../assets/img/select.svg");
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    }
+}

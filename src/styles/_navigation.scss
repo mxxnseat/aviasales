@@ -1,0 +1,31 @@
+.navigation{
+    border: 1px solid $murky_blue;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+    margin-bottom: 20px;
+
+    &__link{
+        text-align: center;
+        text-transform: uppercase;
+        color: $grey;
+        font-weight: 600;
+        font-size: 12px;
+        line-height: 20px;
+        padding: 15px 0;
+        background: $white;
+        cursor: pointer;
+
+        &:nth-child(2n){
+            border-left: 1px solid $murky_blue;
+            border-right: 1px solid $murky_blue;
+        }
+
+        &.active{
+            background-color: $blue;
+            color: $white;
+            border: 1px solid $blue;
+        }
+    }
+}

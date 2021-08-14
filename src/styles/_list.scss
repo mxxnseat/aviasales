@@ -1,0 +1,37 @@
+.list{
+    .card{
+        border-radius: 5px;
+        box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+        border: none;
+        padding: 20px;
+
+        &__price{
+            font-weight: 600;
+            font-size: 24px;
+            line-height: 24px;
+            color: $blue;
+        }
+        .flight-option{
+            &:not(:last-child){
+                margin-bottom: 10px;
+            }
+            &:first-child{
+                margin-top: 20px;
+            }
+
+            &__header{
+                color: $light_grey;
+                font-weight: 600;
+                font-size: 12px;
+                line-height: 18px;
+            }
+            &__value{
+                color: $grey;
+                font-weight: 600;
+                font-size: 14px;
+                line-height: 21px;
+            }
+            
+        }
+    }
+}

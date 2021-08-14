@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+
+@import "./var";
+@import "./options";
+@import "./navigation";
+@import "./list";
+
+body,html{
+    overflow: hidden;
+    font-family: 'Open Sans', sans-serif;
+    min-height: 100vh;
+    background: $background;
+}
+
+.header{
+    padding: 50px 0;
+}
