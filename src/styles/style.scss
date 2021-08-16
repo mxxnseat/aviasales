@@ -5,8 +5,11 @@
 @import "./navigation";
 @import "./list";
 
+#root{
+    padding-bottom: 50px;
+}
 body,html{
-    overflow: hidden;
+    overflow-x: hidden;
     font-family: 'Open Sans', sans-serif;
     min-height: 100vh;
     background: $background;

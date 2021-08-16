@@ -1,20 +1,22 @@
-import React, { Provider } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
+import {Provider} from "mobx-react";
 import App from './App';
 
 //stores
-import { optionsStore } from "./store/options-store";
+import optionsStore from "./store/options-store";
+import ticketsStore from './store/tickets-store';
 
 const stores = {
-  options: optionsStore
+  options: optionsStore,
+  tickets: ticketsStore
 }
 
 
+
 ReactDOM.render(
-  <Provider {...stores}>
-    <React.StrictMode>
+    <Provider {...stores}>
       <App />
-    </React.StrictMode>
-  </Provider>,
+    </Provider>,
   document.getElementById('root')
 );

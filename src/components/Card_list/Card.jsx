@@ -1,31 +1,24 @@
-import company_logo from "../../assets/img/company_logo.png";
+import {toJS} from "mobx";
+import { Option } from "./Option";
 
+export function Card(props){
+    const segments = toJS(props.segments);
 
-export function Card(){
     return (
         <div className="card gy-5">
         <div className="d-flex align-items-center justify-content-between">
-          <div className="card__price">13 400 Р</div>
+          <div className="card__price">{props.price} Р</div>
           <div className="card__logo">
-            <img src={company_logo} alt="" />
+            <img src={`//pics.avs.io/99/36/${props.carrier}.png`} alt="" />
           </div>
         </div>
         
         <div className="flight-option-list">
-          <div className="d-flex flight-option">
-            <div className="col flight">
-              <div className="flight-option__header">MOW – HKT</div>
-              <div className="flight-option__value">10:45 – 08:00</div>
-            </div>
-            <div className="flight_time col">
-              <div className="flight-option__header">В пути</div>
-              <div className="flight-option__value">21ч 15м</div>
-            </div>
-            <div className="col transfer-count">
-              <div className="flight-option__header">2 пересадки</div>
-              <div className="flight-option__value">HKG, JNB</div>
-            </div>
-          </div>
+          {
+            segments.map((segment, index)=>{
+              return <Option key={index} {...segment} />
+            })
+          }
         </div>
       </div>
     )
