@@ -1,4 +1,4 @@
-import { makeAutoObservable, action, observable, reaction, toJS, configure, runInAction } from "mobx";
+import { makeAutoObservable, action, observable, reaction, configure, runInAction } from "mobx";
 import axios from "../helpers/overAxios";
 import Options from "./options-store";
 
@@ -18,13 +18,14 @@ class Tickets {
 
     constructor() {
         makeAutoObservable(this);
+
+        this.isStop = false;
     }
 
-    sortByOptions(options) {
-        return this.clear_list.filter(ticket => {
-            return options.has(ticket.segments[0].stops.length) &&
-                options.has(ticket.segments[1].stops.length)
-        });;
+    sortByOptions(options, array) {
+        return array.filter(ticket => {
+            return options.has(ticket.segments[0].stops.length) && options.has(ticket.segments[1].stops.length);
+        });
     }
     sortByType(type, array) {
         let result = []
@@ -48,40 +49,51 @@ class Tickets {
 
         return result;
     }
+    sortTickets(o, array) {
+        return this.sortByType(o.type, this.sortByOptions(o.options, array));
+    }
+    @action recieveTickets(o) {
+        if(this.isStop){
+            this.list = this.sortTickets(o, this.clear_list);
 
-    @action recieveTickets() {
+            return;
+        }
+
         const searchString = `https://front-test.beta.aviasales.ru/tickets?searchId=${this.searchID}`;
 
         axios.get(searchString)
             .then(({ data }) => {
+                if(data.stop){
+                    this.isStop = true;
+                    runInAction(()=>{
+                        this.clear_list = data.tickets;
+                        this.list = this.sortTickets(o, data.tickets);
+                    });
+                    return;
+                }
+
                 runInAction(() => {
-                    this.list = this.clear_list = cheapestTickets(data.tickets);
+                    this.list = this.sortTickets(o, data.tickets);
                 });
             })
             .catch(e => {
-                this.recieveTickets();
+                this.recieveTickets(o);
             })
     }
-    @action reciveSearchID() {
+    reciveSearchID(o = {
+        type: 'cheapest',
+        options: new Set([0,1,2,3])
+    }) {
         axios.get('https://front-test.beta.aviasales.ru/search')
-            .then(({ data }) => this.searchID = data.searchId);
-    }
+            .then(({ data }) => {
+                this.searchID = data.searchId;
 
-    @action sortTickets(o) {
-        this.list = this.sortByType(o.type,this.sortByOptions(o.options));
+                this.recieveTickets(o);
+            });
     }
-
 }
 
 const tickets = new Tickets();
-
-
-reaction(
-    () => tickets.searchID !== null,
-    () => {
-        tickets.recieveTickets()
-    }
-) s
 
 reaction(
     () => ({
@@ -89,7 +101,7 @@ reaction(
         options: Options.optionsSet
     }),
     (o) => {
-        tickets.sortTickets(o);
+        tickets.recieveTickets(o);
     }
 )
 

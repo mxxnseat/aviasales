@@ -14,7 +14,7 @@ function App() {
         <div className="header d-flex justify-content-center">
           <img src={logo} alt="" />
         </div>
-        <div className="row gx-5">
+        <div className="row gx-0 gx-md-5">
           <Options />
           <div className="col-md-9 main">
             <Navigation />

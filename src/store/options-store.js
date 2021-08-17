@@ -74,7 +74,7 @@ class Options {
     setFlightType(type) {
         this.flight_type = type;
     }
-
+    
     @computed get optionsSet(){
         const set = new Set();
 
