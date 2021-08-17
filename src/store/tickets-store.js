@@ -81,7 +81,7 @@ reaction(
     () => {
         tickets.recieveTickets()
     }
-)
+) s
 
 reaction(
     () => ({
